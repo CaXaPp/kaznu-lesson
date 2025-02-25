@@ -1,0 +1,43 @@
+spring:
+  application:
+    name: ukuk-system
+
+  datasource:
+    url: jdbc:postgresql://localhost:5432/ukuk
+    driverClassName: org.postgresql.Driver
+    password: postgres
+    username: postgres
+
+  jpa:
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        temp:
+          use_jdbc_metadata_defaults: false
+      org:
+        hibernate:
+          envers:
+            default_schema: aud
+            store_data_at_delete: true
+    open-in-view: false
+
+  servlet:
+    multipart:
+      max-file-size: 30MB
+      max-request-size: 30MB
+
+application:
+  security:
+    jwt:
+      secret-key: LGNOjywzfblLehNtBw6UgTi1kJOhJuitRKWUKSb9lOzJOIzWcKegix0jBBbQuFmmZARc4xIMPfneS2n6
+      expiration: 1800000
+      refresh-token:
+        expiration: 3000
+
+  minio:
+    url: http://10.145.93.81:9000
+    bucket: ukuk-file-storage
+    access-key: 123456789
+    secret-key: 123456789
