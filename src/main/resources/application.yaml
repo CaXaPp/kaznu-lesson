@@ -1,43 +1,39 @@
 spring:
-  application:
-    name: ukuk-system
-
   datasource:
-    url: jdbc:postgresql://localhost:5432/ukuk
+    url: jdbc:postgresql://localhost:5432/cargo
     driverClassName: org.postgresql.Driver
-    password: postgres
     username: postgres
+    password: postgres
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 2
+      idle-timeout: 30000
+      pool-name: CargoHikariCP
 
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: update  # Или none, если миграции через Flyway/Liquibase
     properties:
       hibernate:
-        temp:
-          use_jdbc_metadata_defaults: false
-      org:
-        hibernate:
-          envers:
-            default_schema: aud
-            store_data_at_delete: true
-    open-in-view: false
+        format_sql: true
+        show_sql: true  # Показывать SQL в логах
+        jdbc:
+          batch_size: 50
+        envers:
+          default_schema: aud
+          store_data_at_delete: true
+    open-in-view: false  # Закрывать сессию после выполнения запроса
 
-  servlet:
-    multipart:
-      max-file-size: 30MB
-      max-request-size: 30MB
+  logging:
+    level:
+      org.hibernate.SQL: DEBUG  # Логирование SQL-запросов
+      org.hibernate.type.descriptor.sql: TRACE  # Вывод значений параметров
 
-application:
-  security:
-    jwt:
-      secret-key: LGNOjywzfblLehNtBw6UgTi1kJOhJuitRKWUKSb9lOzJOIzWcKegix0jBBbQuFmmZARc4xIMPfneS2n6
-      expiration: 1800000
-      refresh-token:
-        expiration: 3000
-
-  minio:
-    url: http://10.145.93.81:9000
-    bucket: ukuk-file-storage
-    access-key: 123456789
-    secret-key: 123456789
+  freemarker:
+    template-loader-path: classpath:/templates/
+    suffix: .ftl
+    charset: UTF-8
+    check-template-location: true
+    settings:
+      number_format: computer

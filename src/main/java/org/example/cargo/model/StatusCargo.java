@@ -1,4 +1,7 @@
 package org.example.cargo.model;
 
-public enum CargoType {
+public enum StatusCargo {
+    WAY, // В ПУТИ
+    LOADING, // ЗАГРУЗКА
+    ARRIVED, // ПРИБЫЛ
 }

@@ -1,4 +1,12 @@
-package org.example.cargo;
+package org.example.cargo.endpoint;
 
-public class CargoEndpoint {
+import org.example.cargo.dto.CargoDto;
+import org.example.cargo.dto.request.CargoRequest;
+
+public interface CargoEndpoint {
+    void create(CargoRequest request);
+
+    void update(Long id, CargoRequest request);
+
+    CargoDto get(Long id);
 }
